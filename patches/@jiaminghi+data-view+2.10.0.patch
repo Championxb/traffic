@@ -1,0 +1,226 @@
+diff --git a/node_modules/@jiaminghi/data-view/lib/components/decoration3/src/main.vue b/node_modules/@jiaminghi/data-view/lib/components/decoration3/src/main.vue
+index 9928231..6226a3f 100644
+--- a/node_modules/@jiaminghi/data-view/lib/components/decoration3/src/main.vue
++++ b/node_modules/@jiaminghi/data-view/lib/components/decoration3/src/main.vue
+@@ -2,25 +2,11 @@
+   <div class="dv-decoration-3" :ref="ref">
+     <svg :width="`${svgWH[0]}px`" :height="`${svgWH[1]}px`" :style="`transform:scale(${svgScale[0]},${svgScale[1]});`">
+ 
+-      <template
+-        v-for="(point, i) in points"
+-      >
+-        <rect
+-          :key="i"
+-          :fill="mergedColor[0]"
+-          :x="point[0] - halfPointSideLength"
+-          :y="point[1] - halfPointSideLength"
+-          :width="pointSideLength"
+-          :height="pointSideLength"
+-        >
+-          <animate
+-            v-if="Math.random() > 0.6"
+-            attributeName="fill"
+-            :values="`${mergedColor.join(';')}`"
+-            :dur="Math.random() + 1 + 's'"
+-            :begin="Math.random() * 2"
+-            repeatCount="indefinite"
+-          />
++      <template :key="i" v-for="(point, i) in points">
++        <rect :fill="mergedColor[0]" :x="point[0] - halfPointSideLength" :y="point[1] - halfPointSideLength"
++          :width="pointSideLength" :height="pointSideLength">
++          <animate v-if="Math.random() > 0.6" attributeName="fill" :values="`${mergedColor.join(';')}`"
++            :dur="Math.random() + 1 + 's'" :begin="Math.random() * 2" repeatCount="indefinite" />
+         </rect>
+       </template>
+     </svg>
+@@ -43,7 +29,7 @@ export default {
+       default: () => ([])
+     }
+   },
+-  data () {
++  data() {
+     const pointSideLength = 7
+ 
+     return {
+@@ -67,26 +53,26 @@ export default {
+     }
+   },
+   watch: {
+-    color () {
++    color() {
+       const { mergeColor } = this
+ 
+       mergeColor()
+     }
+   },
+   methods: {
+-    afterAutoResizeMixinInit () {
++    afterAutoResizeMixinInit() {
+       const { calcSVGData } = this
+ 
+       calcSVGData()
+     },
+-    calcSVGData () {
++    calcSVGData() {
+       const { calcPointsPosition, calcScale } = this
+ 
+       calcPointsPosition()
+ 
+       calcScale()
+     },
+-    calcPointsPosition () {
++    calcPointsPosition() {
+       const { svgWH, rowNum, rowPoints } = this
+ 
+       const [w, h] = svgWH
+@@ -101,25 +87,25 @@ export default {
+ 
+       this.points = points.reduce((all, item) => [...all, ...item], [])
+     },
+-    calcScale () {
++    calcScale() {
+       const { width, height, svgWH } = this
+ 
+       const [w, h] = svgWH
+ 
+       this.svgScale = [width / w, height / h]
+     },
+-    onResize () {
++    onResize() {
+       const { calcSVGData } = this
+ 
+       calcSVGData()
+     },
+-    mergeColor () {
++    mergeColor() {
+       const { color, defaultColor } = this
+ 
+       this.mergedColor = deepMerge(deepClone(defaultColor, true), color || [])
+     }
+   },
+-  mounted () {
++  mounted() {
+     const { mergeColor } = this
+ 
+     mergeColor()
+diff --git a/node_modules/@jiaminghi/data-view/lib/components/decoration6/src/main.vue b/node_modules/@jiaminghi/data-view/lib/components/decoration6/src/main.vue
+index b044326..85f1c5f 100644
+--- a/node_modules/@jiaminghi/data-view/lib/components/decoration6/src/main.vue
++++ b/node_modules/@jiaminghi/data-view/lib/components/decoration6/src/main.vue
+@@ -1,37 +1,16 @@
+ <template>
+   <div class="dv-decoration-6" :ref="ref">
+     <svg :width="`${svgWH[0]}px`" :height="`${svgWH[1]}px`" :style="`transform:scale(${svgScale[0]},${svgScale[1]});`">
+-      <template
+-        v-for="(point, i) in points"
+-      >
+-        <rect
+-          :key="i"
+-          :fill="mergedColor[Math.random() > 0.5 ? 0 : 1]"
+-          :x="point[0] - halfRectWidth"
+-          :y="point[1] - heights[i] / 2"
+-          :width="rectWidth"
+-          :height="heights[i]"
+-        >
+-          <animate
+-            attributeName="y"
++      <template :key="i" v-for="(point, i) in points">
++        <rect :fill="mergedColor[Math.random() > 0.5 ? 0 : 1]" :x="point[0] - halfRectWidth"
++          :y="point[1] - heights[i] / 2" :width="rectWidth" :height="heights[i]">
++          <animate attributeName="y"
+             :values="`${point[1] - minHeights[i] / 2};${point[1] - heights[i] / 2};${point[1] - minHeights[i] / 2}`"
+-            :dur="`${randoms[i]}s`"
+-            keyTimes="0;0.5;1"
+-            calcMode="spline"
+-            keySplines="0.42,0,0.58,1;0.42,0,0.58,1"
+-            begin="0s"
+-            repeatCount="indefinite"
+-          />
+-          <animate
+-            attributeName="height"
+-            :values="`${minHeights[i]};${heights[i]};${minHeights[i]}`"
+-            :dur="`${randoms[i]}s`"
+-            keyTimes="0;0.5;1"
+-            calcMode="spline"
+-            keySplines="0.42,0,0.58,1;0.42,0,0.58,1"
+-            begin="0s"
+-            repeatCount="indefinite"
+-          />
++            :dur="`${randoms[i]}s`" keyTimes="0;0.5;1" calcMode="spline" keySplines="0.42,0,0.58,1;0.42,0,0.58,1"
++            begin="0s" repeatCount="indefinite" />
++          <animate attributeName="height" :values="`${minHeights[i]};${heights[i]};${minHeights[i]}`"
++            :dur="`${randoms[i]}s`" keyTimes="0;0.5;1" calcMode="spline" keySplines="0.42,0,0.58,1;0.42,0,0.58,1"
++            begin="0s" repeatCount="indefinite" />
+         </rect>
+       </template>
+     </svg>
+@@ -56,7 +35,7 @@ export default {
+       default: () => ([])
+     }
+   },
+-  data () {
++  data() {
+     const rectWidth = 7
+ 
+     return {
+@@ -83,26 +62,26 @@ export default {
+     }
+   },
+   watch: {
+-    color () {
++    color() {
+       const { mergeColor } = this
+ 
+       mergeColor()
+     }
+   },
+   methods: {
+-    afterAutoResizeMixinInit () {
++    afterAutoResizeMixinInit() {
+       const { calcSVGData } = this
+ 
+       calcSVGData()
+     },
+-    calcSVGData () {
++    calcSVGData() {
+       const { calcPointsPosition, calcScale } = this
+ 
+       calcPointsPosition()
+ 
+       calcScale()
+     },
+-    calcPointsPosition () {
++    calcPointsPosition() {
+       const { svgWH, rowNum, rowPoints } = this
+ 
+       const [w, h] = svgWH
+@@ -126,25 +105,25 @@ export default {
+       this.randoms = new Array(rowNum * rowPoints)
+         .fill(0).map(foo => Math.random() + 1.5)
+     },
+-    calcScale () {
++    calcScale() {
+       const { width, height, svgWH } = this
+ 
+       const [w, h] = svgWH
+ 
+       this.svgScale = [width / w, height / h]
+     },
+-    onResize () {
++    onResize() {
+       const { calcSVGData } = this
+ 
+       calcSVGData()
+     },
+-    mergeColor () {
++    mergeColor() {
+       const { color, defaultColor } = this
+ 
+       this.mergedColor = deepMerge(deepClone(defaultColor, true), color || [])
+     }
+   },
+-  mounted () {
++  mounted() {
+     const { mergeColor } = this
+ 
+     mergeColor()

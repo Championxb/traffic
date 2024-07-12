@@ -1,0 +1,31 @@
+{
+  "name": "traffic",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "postinstall": "patch-package"
+  },
+  "dependencies": {
+    "@element-plus/icons-vue": "^2.3.1",
+    "@jiaminghi/data-view": "^2.10.0",
+    "axios": "^1.7.2",
+    "dayjs": "^1.11.11",
+    "echarts": "^5.5.1",
+    "element-plus": "^2.7.6",
+    "pinia": "^2.1.7",
+    "scss": "^0.2.4",
+    "vue": "^3.4.29",
+    "vue-router": "^4.4.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.0.5",
+    "sass": "^1.77.6",
+    "unplugin-auto-import": "^0.17.6",
+    "unplugin-vue-components": "^0.27.2",
+    "vite": "^5.3.1"
+  }
+}

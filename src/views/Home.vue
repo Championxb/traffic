@@ -9,6 +9,7 @@ import Content from '../views/DataAnalysis/index.vue'
 <style lang="scss" scoped>
 .container {
     width: 100%;
+    height: calc(100% - 80px);
     // height: 100%;
     // background: #000;
 }

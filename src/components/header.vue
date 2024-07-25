@@ -6,7 +6,7 @@
                 {{ dateYear }} {{ dateWeek }}
             </div>
         </div>
-        <span class="title">四川智慧高速收费站智能拥堵检测系统</span>
+        <span class="title">广西高速公路智慧服务区</span>
         <div class="menu">
             <el-menu class="menu-list" :default-active="activeIndex" mode="horizontal" @select="handleSelect"
                 :ellipsis="false" background-color="#032432" text-color="#fff" active-text-color="#fff">
@@ -118,19 +118,20 @@ const timeFn = () => {
 <style lang="scss" scoped>
 .header-container {
     position: relative;
-    background: #032432;
+    // background: #032432;
     height: 80px;
+    background: url('../assets//img/导航.png');
 
     .timers {
         position: absolute;
-        left: 50px;
-        top: 50%;
+        left: 80px;
+        top: 64%;
         transform: translateY(-50%);
 
         .full_time {
             font-size: 20px;
             font-weight: 600;
-            color: #fff;
+            color: #01AAFF;
 
             span {
                 margin-right: 10px;
@@ -139,8 +140,9 @@ const timeFn = () => {
     }
 
     .title {
-        font-size: 25px;
+        font-size: 30px;
         font-weight: 800;
+        letter-spacing: 10px;
         background: linear-gradient(to right, #01AAFF, #00EAFF 30%, #01AAFF 50%);
         background-size: 200%;
         background-clip: text;
@@ -167,7 +169,7 @@ const timeFn = () => {
         transform: translateX(-50%);
         line-height: 75px;
         text-align: center;
-        border-bottom: 5px solid #01AAFF;
+        // border-bottom: 5px solid #01AAFF;
     }
 
     .menu {
@@ -178,6 +180,11 @@ const timeFn = () => {
         position: absolute;
         right: 50px;
 
+        :deep(.el-menu) {
+            background-color: transparent;
+            --el-menu-hover-bg-color: #8ccff0 !important;
+        }
+
         .menu-list {
             width: 590px;
             position: relative;
@@ -186,7 +193,7 @@ const timeFn = () => {
             border: none;
 
             :deep(.el-menu-item, .el-menu-item) {
-                border-bottom: #00EAFF;
+                border-bottom: #01AAFF;
             }
 
             .menu-item {
@@ -200,6 +207,7 @@ const timeFn = () => {
                 background: #409eff;
             }
         }
+
     }
 }
 </style>

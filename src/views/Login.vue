@@ -29,7 +29,7 @@
             </el-form-item>
           </el-form>
           <el-button class="login-button" type="primary" style="width: 450px; height: 45px;"
-            @click="login">登录</el-button>
+            @click="loginHome">登录</el-button>
         </el-card>
       </div>
     </div>
@@ -41,6 +41,7 @@
 import { UserFilled, Lock } from '@element-plus/icons-vue'
 import { ref, getCurrentInstance } from 'vue'
 import request from '@/api/request'
+import { login } from '@/api'
 import { useRouter } from 'vue-router'
 const { proxy } = getCurrentInstance()
 const router = useRouter()
@@ -48,7 +49,7 @@ const formRef = ref()
 const username = ref('')
 const password = ref('')
 
-const login = async () => {
+const loginHome = async () => {
   if (!username.value || !password.value) {
     proxy.Message.error('用户名或密码不能为空')
     return
@@ -57,24 +58,20 @@ const login = async () => {
     username: username.value,
     password: password.value
   }
-  await request({
-    url: '/user/login',
-    method: 'post',
-    auth: data,
-    data
-  }).then(res => {
+  try {
+    const res = await login(data)
     if (res.code === 200) {
       console.log('登录成功')
       router.replace('/home')
       //存储token
       localStorage.setItem('role', res.data.role)
       localStorage.setItem('token', res.data.token)
+      proxy.Message.success(res.message)
     }
-
-  }).catch(err => {
-    console.log(err)
-    proxy.Message.error(err.response.data.message)
-  })
+  } catch (error) {
+    console.log(error)
+    proxy.Message.error(error.response.data.message)
+  }
 }
 
 

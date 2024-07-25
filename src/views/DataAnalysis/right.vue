@@ -1,11 +1,17 @@
 <template>
     <div class="container">
         <div class="content">
+            <div class="mask-overall" v-if="showMask" @click="closeMask">
+                <div class="mask_content">
+                    <img :src="allMonitorEventList[openMaskPicIndex].picture_path">
+                </div>
+            </div>
             <el-table :data="allMonitorEventList" style="width: 100%;height: 730px;">
-                <el-table-column label="事件截图" width="80">
+                <el-table-column label="事件截图" width="85">
                     <template #default="scope">
                         <span style="display: flex; align-items: center;">
-                            <img :src="scope.row.picture_path" style="width: 25px; height: 25px;" alt="">
+                            <img :src="scope.row.picture_path" style="width: 80px; height: 50px;" alt=""
+                                @click="openMask(scope.$index)">
                         </span>
                     </template>
                 </el-table-column>
@@ -46,13 +52,24 @@
 </template>
 <script setup>
 import request from '@/api/request'
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, getCurrentInstance } from 'vue'
 import dayjs from "dayjs";
+import { region, vehicleCountTime, vehicleType, vehicleCountAll, vehicleCountGroup } from "@/api"
+const { proxy } = getCurrentInstance()
 
 const getImageSrc = (eventName) => {
     return new URL(`../../assets/img/${eventName}.png`, import.meta.url).href
 }
 
+const showMask = ref(false)
+const closeMask = () => {
+    showMask.value = false
+}
+const openMaskPicIndex = ref()
+const openMask = (index) => {
+    openMaskPicIndex.value = index
+    showMask.value = true
+}
 const allMonitorEventList = ref([])
 const getAllData = async () => {
     let start_time = dayjs("2020-09-10")
@@ -63,20 +80,111 @@ const getAllData = async () => {
         page: 1,
         per_page: 50,
     };
-    await request({
-        url: '/event/logs',
-        method: 'get',
-        params,
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
-    }).then(res => {
+
+    try {
+        const res = await request({
+            url: proxy.Api.logs,
+            method: 'get',
+            params,
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+        })
         if (res.code === 200) {
             allMonitorEventList.value = res.data.items
         }
         //存入数据到localstorage
         localStorage.setItem('allMonitorEventList', JSON.stringify(res.data.items))
-        console.log(res.data.items)
-    }).catch(err => {
-        console.log(err)
+        getPicturepPath()
+        console.log(allMonitorEventList.value)
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+const getRegion = async () => {
+    try {
+        const res = await region()
+        if (res.code === 1 || res.code === 200) {
+            console.log(res.data)
+
+        }
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+// getRegion()
+
+
+const getVehicleinfo = async () => {
+    try {
+        const res = await vehicleType()
+        if (res.code === 1 || res.code === 200) {
+            console.log('vehicle', res.data)
+
+        }
+    } catch (error) {
+        console.log(error)
+    }
+}
+// getVehicleinfo()
+
+const getCertainTimeVehicleCount = async () => {
+    const data = {
+        road_id: 1,
+        start_time: "2024-07-16 16:22:05",
+        end_time: "2024-07-17 16:22:05"
+    }
+    const dataJson = JSON.stringify(data)
+    try {
+        const res = await vehicleCountTime(dataJson)
+        if (res.code === 1 || res.code === 200) {
+            console.log('vehicleCountTime', res.data)
+        }
+    } catch (error) {
+        console.log(error)
+    }
+}
+// getCertainTimeVehicleCount()
+const getVehicleCountAll = async () => {
+    const data = {
+        road_id: 3,
+    }
+    try {
+        const res = await vehicleCountAll(data)
+        if (res.code === 1 || res.code === 200) {
+            console.log('vehicleCountAll', res.data)
+        }
+    } catch (error) {
+        console.log(error)
+    }
+}
+// getVehicleCountAll()
+
+const getVehicleCountGroup = async () => {
+    const data = {
+        road_id: 1,
+        region_id: 1,
+        group: "today"
+    }
+    const dataJson = JSON.stringify(data)
+    try {
+        const res = await vehicleCountGroup(dataJson)
+        if (res.code === 1 || res.code === 200) {
+            console.log('vehicleCountGroup', res.data)
+        }
+    } catch (error) {
+        console.log(error)
+    }
+}
+// getVehicleCountGroup()
+
+const getPicturepPath = () => {
+    //把allMonitorEventList.picture_path列表赋值给picture_path
+    let picture_path = allMonitorEventList.value.map(item => item.picture_path.split(proxy.Api.devDomain)[1])
+    let video_path = allMonitorEventList.value.map(item => item.video_path.split(proxy.Api.devDomain)[1])
+    allMonitorEventList.value.forEach((item, index) => {
+        item.picture_path = picture_path[index]
+        item.video_path = video_path[index]
     })
 }
 
@@ -84,7 +192,7 @@ onMounted(() => {
     if (localStorage.getItem('allMonitorEventList')) {
         allMonitorEventList.value = JSON.parse(localStorage.getItem('allMonitorEventList'))
     }
-    getAllData()
+    // getAllData()
 })
 const handleDetail = (index, row) => {
     console.log(index, row)
@@ -94,6 +202,45 @@ const handleDetail = (index, row) => {
 <style lang="scss" scoped>
 .container {
     .content {
+        .mask-overall {
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 1000;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.65);
+            height: 100%;
+            animation: move .3s linear;
+            animation-fill-mode: forwards;
+
+            .mask_content {
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%);
+                // background-color: #fff;
+                width: 80%; //大小可自己定义
+                height: 80%;
+
+                img {
+                    width: 100%;
+                    opacity: 0.8;
+                }
+            }
+
+            @keyframes move {
+                0% {
+                    opacity: 0;
+                }
+
+                100% {
+                    opacity: 1;
+                }
+            }
+        }
+
         :deep(.el-table) thead tr {
             background-color: rgba(0, 13, 32, 0.2);
             border: none;

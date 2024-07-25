@@ -1,10 +1,12 @@
 import axios from "axios";
+const contentTypeJson = "application/json"; //"application/x-www-form-urlencoded"
+export const baseURL = import.meta.env.VITE_PROD_BASE_API;
 
 const request = axios.create({
-  baseURL: "http://192.168.9.83:8088/api",
+  baseURL: baseURL,
   timeout: 5000,
   headers: {
-    "Content-Type": "application/x-www-form-urlencoded",
+    "Content-Type": contentTypeJson,
   },
 });
 

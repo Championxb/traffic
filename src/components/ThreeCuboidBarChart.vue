@@ -34,14 +34,15 @@ function init() {
     directionalLight.position.set(5, 5, 5);
     scene.add(directionalLight);
 
+    const totalBarData = 100
     // 创建柱子
     const barData = [
-        { value: 285, total: 500, colorStart: 0x00aaff, colorEnd: 0x87cefa, label: '柱1' },
-        { value: 686, total: 1000, colorStart: 0x00aaff, colorEnd: 0x87cefa, label: '柱2' },
-        { value: 321, total: 700, colorStart: 0x00aaff, colorEnd: 0x87cefa, label: '柱3' },
-        { value: 868, total: 1000, colorStart: 0x00aaff, colorEnd: 0x87cefa, label: '柱4' },
-        { value: 333, total: 500, colorStart: 0x00aaff, colorEnd: 0x87cefa, label: '柱5' },
-        { value: 333, total: 500, colorStart: 0x00aaff, colorEnd: 0x87cefa, label: '柱6' },
+        { value: 81, total: totalBarData, colorStart: 0x00aaff, colorEnd: 0x87cefa, label: 'x' },
+        { value: 26, total: totalBarData, colorStart: 0x00aaff, colorEnd: 0x87cefa, label: 'y' },
+        { value: 72, total: totalBarData, colorStart: 0x00aaff, colorEnd: 0x87cefa, label: 'z' },
+        { value: 38, total: totalBarData, colorStart: 0x00aaff, colorEnd: 0x87cefa, label: 'a' },
+        { value: 26, total: totalBarData, colorStart: 0x00aaff, colorEnd: 0x87cefa, label: 'b' },
+        { value: 38, total: totalBarData, colorStart: 0x00aaff, colorEnd: 0x87cefa, label: 'c' },
 
     ];
 
@@ -49,11 +50,11 @@ function init() {
     loader.load('./src/assets/fonts/SimHei_Regular.json', function (font) { // 使用支持中文的字体文件
         barData.forEach((data, index) => {
             // 创建表示值的部分
-            const valueHeight = data.value / 100;
-            const remainingHeight = data.total / 100 - valueHeight;
+            const valueHeight = data.value / 10;
+            const remainingHeight = data.total / 10 - valueHeight;
 
             // 创建渐变材质
-            const valueGeometry = new THREE.BoxGeometry(1, valueHeight, 1);
+            const valueGeometry = new THREE.BoxGeometry(1.5, valueHeight, 1);
             const valueMaterial = new THREE.ShaderMaterial({
                 uniforms: {
                     color1: { value: new THREE.Color(data.colorStart) },
@@ -83,24 +84,24 @@ function init() {
             //边缘线
             const edges = new THREE.EdgesGeometry(valueGeometry);
             const line = new THREE.LineSegments(edges, new THREE.LineBasicMaterial({ color: 0x80FFFF }));
-            line.position.set(index * 3 - 6, valueHeight / 2, 0);
+            line.position.set(index * 3 - 7, valueHeight / 2, 0);
             line.rotateY(Math.PI / 4); // 旋转45度
             scene.add(line);
             const valueMesh = new THREE.Mesh(valueGeometry, valueMaterial);
-            valueMesh.position.set(index * 3 - 6, valueHeight / 2, 0);
+            valueMesh.position.set(index * 3 - 7, valueHeight / 2, 0);
             valueMesh.rotateY(Math.PI / 4); // 旋转45度
             scene.add(valueMesh);
 
             // 创建表示剩余部分
-            const remainingGeometry = new THREE.BoxGeometry(1, remainingHeight, 1);
+            const remainingGeometry = new THREE.BoxGeometry(1.5, remainingHeight, 1);
             const remainingMaterial = new THREE.MeshPhongMaterial({ color: data.colorEnd, transparent: true, opacity: 0.5 });
             const remainingMesh = new THREE.Mesh(remainingGeometry, remainingMaterial);
-            remainingMesh.position.set(index * 3 - 6, valueHeight + remainingHeight / 2, 0);
+            remainingMesh.position.set(index * 3 - 7, valueHeight + remainingHeight / 2, 0);
             remainingMesh.rotateY(Math.PI / 4); // 旋转45度
             //边缘线
             const edges2 = new THREE.EdgesGeometry(remainingGeometry);
             const line2 = new THREE.LineSegments(edges2, new THREE.LineBasicMaterial({ color: 0x80FFFF }));
-            line2.position.set(index * 3 - 6, valueHeight + remainingHeight / 2, 0);
+            line2.position.set(index * 3 - 7, valueHeight + remainingHeight / 2, 0);
             line2.rotateY(Math.PI / 4); // 旋转45度
             scene.add(line2);
             scene.add(remainingMesh);
@@ -108,29 +109,86 @@ function init() {
             // 添加数值文字
             const valueTextGeometry = new TextGeometry(data.value.toString(), {
                 font: font,
-                size: 0.5,
+                size: 1,
                 height: 0.1,
             });
             const valueTextMaterial = new THREE.MeshPhongMaterial({ color: 0xffffff });
             const valueText = new THREE.Mesh(valueTextGeometry, valueTextMaterial);
-            valueText.position.set(index * 3 - 6.5, valueHeight + remainingHeight + 0.5, 0);
+            valueText.position.set(index * 3 - 7.5, valueHeight + remainingHeight + 0.5, 0);
             scene.add(valueText);
 
             // 添加标签文字
             const labelGeometry = new TextGeometry(data.label, {
                 font: font,
-                size: 0.5,
+                size: 1,
                 height: 0.1,
             });
             const labelMaterial = new THREE.MeshPhongMaterial({ color: 0xffffff });
             const labelText = new THREE.Mesh(labelGeometry, labelMaterial);
-            labelText.position.set(index * 3 - 6.5, -1, 0);
+            labelText.position.set(index * 3 - 8, -2.5, 0);
             scene.add(labelText);
         });
     });
+
+    //坐标轴X uP
+    const lineXupMaterial = new THREE.LineDashedMaterial({
+        color: 0x85C1E9,
+        scale: 1,
+        dashSize: 2,
+        gapSize: 1,
+        scale: 2,
+        isLineDashedMaterial: true
+    });
+
+    const pointsXup = [];
+    pointsXup.push(new THREE.Vector3(-8, 7.5, 0));//11, -0.3, 0
+    pointsXup.push(new THREE.Vector3(11.8, 7.5, 0));//11, 10.5, 0
+
+    const LineXUpgeometry = new THREE.BufferGeometry().setFromPoints(pointsXup);
+
+    const lineXup = new THREE.Line(LineXUpgeometry, lineXupMaterial);
+    lineXup.computeLineDistances(); // 确保线条的距离已计算
+    scene.add(lineXup);
+
+    //坐标轴X down
+    const lineXdownMaterial = new THREE.LineDashedMaterial({
+        color: 0x85C1E9,
+        scale: 1,
+        dashSize: 2,
+        gapSize: 1,
+        scale: 2,
+        isLineDashedMaterial: true
+    });
+
+    const pointsXdown = [];
+    pointsXdown.push(new THREE.Vector3(-8, 2, 0));//11, -0.3, 0
+    pointsXdown.push(new THREE.Vector3(11.8, 2, 0));//11, 10.5, 0
+
+    const LineXDowngeometry = new THREE.BufferGeometry().setFromPoints(pointsXdown);
+
+    const lineXdown = new THREE.Line(LineXDowngeometry, lineXdownMaterial);
+    lineXdown.computeLineDistances(); // 确保线条的距离已计算
+    scene.add(lineXdown);
+
+
+    //坐标轴Y
+    const lineYMaterial = new THREE.LineBasicMaterial({
+        color: 0x0FFFF,
+    });
+
+    const pointsY = [];
+    pointsY.push(new THREE.Vector3(11, -0.3, 0));
+    pointsY.push(new THREE.Vector3(11, 10.5, 0));
+
+    const lineYgeometry = new THREE.BufferGeometry().setFromPoints(pointsY);
+
+    const lineY = new THREE.Line(lineYgeometry, lineYMaterial);
+    lineY.computeLineDistances(); // 确保线条的距离已计算
+    scene.add(lineY);
+
     // 添加地面
     const planeGeometry = new THREE.PlaneGeometry(20, 5);
-    const planeMaterial = new THREE.MeshPhongMaterial({ color: 0x011D487A, transparent: true, opacity: 1 });
+    const planeMaterial = new THREE.MeshPhongMaterial({ color: 0x011D487A, transparent: true, opacity: 0.5 });
     const plane = new THREE.Mesh(planeGeometry, planeMaterial);
     plane.rotation.x = -Math.PI / 2;
     plane.position.y = -0.1;

@@ -80,7 +80,7 @@ onMounted(() => {
             // width: 50%;
 
             .content-item {
-                margin-bottom: 30px;
+                margin-bottom: 20px;
                 display: inline-block;
                 width: 500px;
                 height: 300px;

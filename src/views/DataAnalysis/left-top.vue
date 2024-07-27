@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <!-- <img src="../../assets/img/柱1.png" /> -->
-        <ThreeBarChart />
+        <ThreeBarChart style="margin-top: -20px;" />
 
         <!-- <div class="box">
             <span> 今日事件总数 </span>

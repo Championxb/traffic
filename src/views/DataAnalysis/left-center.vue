@@ -1,7 +1,8 @@
 <template>
     <div class="container">
-        <div class="content" style="position: relative;">
-            <ThreeCuboidBarChart style=" position: absolute; top:-100px" />
+        <ThreeCuboidBarChart style="margin-top: -20px;" />
+
+        <div class="content">
             <!-- <img src="../../assets/img/柱2.png" style="margin-top: 40px;margin-left: 10px;" /> -->
         </div>
     </div>
@@ -13,7 +14,8 @@ import ThreeCuboidBarChart from '../../components/ThreeCuboidBarChart.vue';
 .container {
     width: 100%;
     height: 100%;
-
-    .content {}
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 </style>

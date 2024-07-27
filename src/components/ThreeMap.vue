@@ -610,19 +610,19 @@ const onWindowResize = () => {
 }
 // window.addEventListener('resize', onWindowResize, true);
 
-window.addEventListener("dblclick", () => {
-    const fullScreenElement = document.fullscreenElement;
-    if (!fullScreenElement) {
-        //   双击控制屏幕进入全屏，退出全屏
-        // 让画布对象全屏
-        renderer.domElement.requestFullscreen();
-        // labelRenderer.domElement.requestFullscreen();
-    } else {
-        //   退出全屏，使用document对象
-        document.exitFullscreen();
-    }
-    // console.log(fullScreenElement);
-});
+// window.addEventListener("dblclick", () => {
+//     const fullScreenElement = document.fullscreenElement;
+//     if (!fullScreenElement) {
+//         //   双击控制屏幕进入全屏，退出全屏
+//         // 让画布对象全屏
+//         renderer.domElement.requestFullscreen();
+//         // labelRenderer.domElement.requestFullscreen();
+//     } else {
+//         //   退出全屏，使用document对象
+//         document.exitFullscreen();
+//     }
+//     // console.log(fullScreenElement);
+// });
 
 onMounted(() => {
     init()

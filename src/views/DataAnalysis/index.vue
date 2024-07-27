@@ -15,7 +15,7 @@
             <div class="content-center">
                 <img src="./../../assets/img/数据概况.png" alt=""
                     style="position: absolute; margin-left: 50%;transform: translate(-50%);margin-top: 10px;width: 600px;">
-                <Three />
+                <ThreeMap />
             </div>
             <div class="content-right">
                 <ItemWrap class="content-right-top content-item" title="事件详情">
@@ -33,7 +33,7 @@
 import LeftTop from './left-top.vue'
 import LeftCenter from './left-center.vue'
 import LeftBottom from './left-bottom.vue'
-import Three from '@/components/ThreeJs.vue'
+import ThreeMap from '@/components/ThreeMap.vue'
 import Right from './right.vue'
 import { onMounted, ref } from 'vue';
 import request from '@/api/request'
@@ -88,7 +88,7 @@ onMounted(() => {
         }
 
         .content-center {
-            background: #000;
+            // background: #000;
             width: 100%;
             height: 100%;
         }

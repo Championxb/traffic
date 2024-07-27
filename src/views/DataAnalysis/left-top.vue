@@ -1,16 +1,17 @@
 <template>
     <div class="container">
-        <img src="../../assets/img/柱1.png" />
+        <!-- <img src="../../assets/img/柱1.png" /> -->
+        <ThreeBarChart />
 
-        <div class="box">
-            <!-- <span> 今日事件总数 </span>
-            <span> {{ eventSum }} </span> -->
-        </div>
+        <!-- <div class="box">
+            <span> 今日事件总数 </span>
+            <span> {{ eventSum }} </span>
+        </div> -->
     </div>
 </template>
 <script setup>
 import { ref, onMounted, defineProps } from 'vue'
-
+import ThreeBarChart from '../../components/ThreeBarChart.vue';
 const props = defineProps({
     eventSum: {
         type: Number,

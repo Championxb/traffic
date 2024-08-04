@@ -32,6 +32,12 @@ const router = createRouter({
           name: "home",
           component: () => import("@/views/Home.vue"),
         },
+        {
+          path: "/eventAnalysis",
+          name: "eventAnalysis",
+          component: () =>
+            import("@/views/DataAnalysis/ChemicalParkAnalysis.vue"),
+        },
       ],
     },
   ],

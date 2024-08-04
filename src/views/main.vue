@@ -2,7 +2,11 @@
     <ScaleScreen>
         <div class="container">
             <Header />
-            <router-view />
+            <router-view v-slot="{ Component }">
+                <keep-alive>
+                    <component :is="Component" ref="componentRef" />
+                </keep-alive>
+            </router-view>
         </div>
     </ScaleScreen>
 </template>

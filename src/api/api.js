@@ -10,5 +10,6 @@ const api = {
   vehicleCountTime: "/vehicle/count/time",
   vehicleCountAll: "/vehicle/count/now",
   vehicleCountGroup: "/vehicle/count/group",
+  log: "/hazardouschemicaleventlog/logs",
 };
 export default api;

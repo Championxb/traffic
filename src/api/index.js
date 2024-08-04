@@ -56,3 +56,13 @@ export const vehicleCountGroup = (data) => {
     data,
   });
 };
+
+export const eventLog = (params) => {
+  return request({
+    baseURL: Api.prodApi,
+    url: Api.log,
+    method: "get",
+    Authorization: Authorization,
+    params,
+  });
+};

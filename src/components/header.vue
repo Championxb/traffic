@@ -36,9 +36,9 @@
                             <Tools />
                         </el-icon>配置
                     </template>
-                    <el-menu-item index="4-4-1">系统配置</el-menu-item>
-                    <el-menu-item index="4-4-2">用户配置</el-menu-item>
-                    <el-menu-item index="4-4-3">检测配置</el-menu-item>
+                    <el-menu-item index="5-5-1">系统配置</el-menu-item>
+                    <el-menu-item index="5-5-2">用户配置</el-menu-item>
+                    <el-menu-item index="5-5-3">检测配置</el-menu-item>
                 </el-sub-menu>
             </el-menu>
         </div>
@@ -60,29 +60,29 @@ const dateDay = ref(null)
 const timer = ref(null)
 const handleSelect = (index) => {
     activeIndex.value = index
-    // // switch (index) {
-    // //     case '1':
-    // //         router.push('/')
-    // //         break
-    // //     case '2':
-    // //         router.push('/video')
-    // //         break
-    // //     case '3':
-    // //         router.push('/history')
-    // //         break
-    // //     case '4':
-    // //         router.push('/data')
-    // //         break
-    // //     case '4-4-1':
-    // //         router.push('/system')
-    // //         break
-    // //     case '4-4-2':
-    // //         router.push('/user')
-    // //         break
-    // //     case '4-4-3':
-    // //         router.push('/detection')
-    // //         break
-    // }
+    switch (index) {
+        case '1':
+            router.push('/home')
+            break
+        case '2':
+            router.push('/video')
+            break
+        case '3':
+            router.push('/history')
+            break
+        case '4':
+            router.push('/eventAnalysis')
+            break
+        case '5-5-1':
+            router.push('/system')
+            break
+        case '5-5-2':
+            router.push('/user')
+            break
+        case '5-5-3':
+            router.push('/detection')
+            break
+    }
 }
 const logout = () => {
     if (localStorage.getItem('token')) {

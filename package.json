@@ -12,6 +12,7 @@
   "dependencies": {
     "@element-plus/icons-vue": "^2.3.1",
     "@jiaminghi/data-view": "^2.10.0",
+    "ali-oss": "^6.20.0",
     "axios": "^1.7.2",
     "d3-geo": "^3.1.1",
     "dat.gui": "^0.7.9",

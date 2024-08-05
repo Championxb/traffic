@@ -110,7 +110,7 @@ function init() {
             const valueTextGeometry = new TextGeometry(data.value.toString(), {
                 font: font,
                 size: 1,
-                height: 0.1,
+                depth: 0.1,
             });
             const valueTextMaterial = new THREE.MeshPhongMaterial({ color: 0xffffff });
             const valueText = new THREE.Mesh(valueTextGeometry, valueTextMaterial);
@@ -121,7 +121,7 @@ function init() {
             const labelGeometry = new TextGeometry(data.label, {
                 font: font,
                 size: 1,
-                height: 0.1,
+                depth: 0.1,
             });
             const labelMaterial = new THREE.MeshPhongMaterial({ color: 0xffffff });
             const labelText = new THREE.Mesh(labelGeometry, labelMaterial);

@@ -2,11 +2,12 @@
     <ScaleScreen>
         <div class="container">
             <Header />
-            <router-view v-slot="{ Component }">
+            <!-- <router-view v-slot="{ Component }">
                 <keep-alive>
                     <component :is="Component" ref="componentRef" />
                 </keep-alive>
-            </router-view>
+            </router-view> -->
+            <router-view />
         </div>
     </ScaleScreen>
 </template>

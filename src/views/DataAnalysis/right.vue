@@ -1,53 +1,54 @@
 <template>
     <div class="container">
-        <div class="content">
-            <div class="mask-overall" v-if="showMask" @click="closeMask">
-                <div class="mask_content">
-                    <img :src="allMonitorEventList[openMaskPicIndex].picture_path">
-                </div>
+        <div class="mask-overall" v-if="showMask" @click="closeMask">
+            <div class="mask_content">
+                <!-- <img :src="allMonitorEventList[openMaskPicIndex].picture_path"> -->
+                <img :src="tempImgUrl">
             </div>
-            <el-table :data="allMonitorEventList" style="width: 100%;height: 730px;">
-                <el-table-column label="事件截图" width="85">
-                    <template #default="scope">
-                        <span style="display: flex; align-items: center;">
-                            <img :src="scope.row.picture_path" style="width: 80px; height: 50px;" alt=""
-                                @click="openMask(scope.$index)">
-                        </span>
-                    </template>
-                </el-table-column>
-                <el-table-column label="报警时间" width="126">
-                    <template #default="scope">
-                        <div style="display: flex; align-items: center">
-                            <el-icon>
-                                <timer />
-                            </el-icon>
-                            <span style="margin-left: 10px">{{ scope.row.datetime }}</span>
-                        </div>
-                    </template>
-                </el-table-column>
-                <el-table-column label="报警地点" width="80">
-                    <template #default="scope">
-                        <el-tag>{{ scope.row.road_name }}</el-tag>
-                    </template>
-                </el-table-column>
-                <el-table-column label="报警类型" width="110">
-                    <template #default="scope">
-                        <span style="display: flex; align-items: center;">
-                            <img :src="getImageSrc(scope.row.event_name)"
-                                style="width: 25px; height: 25px; margin-right: 5px;" alt="">
-                            <el-tag>{{ scope.row.event_name }}</el-tag>
-                        </span>
-                    </template>
-                </el-table-column>
-                <el-table-column label="事件详情">
-                    <template #default="scope">
-                        <el-button size="small" type="success" @click="handleDetail(scope.$index, scope.row)">
-                            查看详情
-                        </el-button>
-                    </template>
-                </el-table-column>
-            </el-table>
         </div>
+        <el-table :data="allMonitorEventList" style="width: 100%;height: 730px;">
+            <el-table-column label="事件截图" width="85">
+                <template #default="scope">
+                    <span style="display: flex; align-items: center;">
+                        <!-- <img :src="scope.row.picture_path" style="width: 80px; height: 50px;" alt=""
+                                @click="openMask(scope.$index)"> -->
+                        <img :src="tempImgUrl" style="width: 80px; height: 50px; margin-right: 5px;" alt=""
+                            @click="openMask(1)">
+                    </span>
+                </template>
+            </el-table-column>
+            <el-table-column label="报警时间" width="126">
+                <template #default="scope">
+                    <div style="display: flex; align-items: center">
+                        <el-icon>
+                            <timer />
+                        </el-icon>
+                        <span style="margin-left: 10px">{{ scope.row.datetime }}</span>
+                    </div>
+                </template>
+            </el-table-column>
+            <el-table-column label="报警地点" width="80">
+                <template #default="scope">
+                    <el-tag>{{ scope.row.road_name }}</el-tag>
+                </template>
+            </el-table-column>
+            <el-table-column label="报警类型" width="110">
+                <template #default="scope">
+                    <span style="display: flex; align-items: center;">
+                        <img :src="getImageSrc(scope.row.event_name)"
+                            style="width: 25px; height: 25px; margin-right: 5px;" alt="">
+                        <el-tag>{{ scope.row.event_name }}</el-tag>
+                    </span>
+                </template>
+            </el-table-column>
+            <el-table-column label="事件详情">
+                <template #default="scope">
+                    <el-button size="small" type="success" @click="handleDetail(scope.$index, scope.row)">
+                        查看详情
+                    </el-button>
+                </template>
+            </el-table-column>
+        </el-table>
     </div>
 </template>
 <script setup>
@@ -56,7 +57,7 @@ import { ref, onMounted, getCurrentInstance } from 'vue'
 import dayjs from "dayjs";
 import { region, vehicleCountTime, vehicleType, vehicleCountAll, vehicleCountGroup } from "@/api"
 const { proxy } = getCurrentInstance()
-
+const tempImgUrl = "https://guangxigaosugonglu.oss-cn-chengdu.aliyuncs.com/image/develop/______swjtu9422_server03/1/20240716_175333_______swjtu9422_server03_视频通道1_非机动车_100016.jpg"
 const getImageSrc = (eventName) => {
     return new URL(`../../assets/img/${eventName}.png`, import.meta.url).href
 }
@@ -201,93 +202,90 @@ const handleDetail = (index, row) => {
 </script>
 <style lang="scss" scoped>
 .container {
-    .content {
-        .mask-overall {
-            position: fixed;
-            top: 0;
-            right: 0;
-            bottom: 0;
-            left: 0;
-            z-index: 1000;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.65);
-            height: 100%;
-            animation: move .3s linear;
-            animation-fill-mode: forwards;
+    .mask-overall {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 1000;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.65);
+        animation: move .3s linear;
+        animation-fill-mode: forwards;
 
-            .mask_content {
-                position: absolute;
-                left: 50%;
-                top: 50%;
-                transform: translate(-50%, -50%);
-                // background-color: #fff;
-                width: 80%; //大小可自己定义
-                height: 80%;
+        .mask_content {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #fff;
+            width: 80%; //大小可自己定义
+            height: 80%;
 
-                img {
-                    width: 100%;
-                    opacity: 0.8;
-                }
-            }
-
-            @keyframes move {
-                0% {
-                    opacity: 0;
-                }
-
-                100% {
-                    opacity: 1;
-                }
+            img {
+                width: 100%;
+                // opacity: 0.8;
             }
         }
 
-        :deep(.el-table) thead tr {
-            background-color: rgba(0, 13, 32, 0.2);
-            border: none;
-        }
+        @keyframes move {
+            0% {
+                opacity: 0;
+            }
 
-        //表头透明化
-        :deep(.el-table) thead th {
-            text-align: center;
-            background-color: rgba(0, 13, 32, 0.2);
-            border: none;
+            100% {
+                opacity: 1;
+            }
         }
-
-        :deep(.el-table) thead th div {
-            color: #ffffff !important;
-        }
-
-        :deep(.el-table) tbody {
-            background-color: rgba(0, 13, 32, 0.2);
-        }
-
-        :deep(.el-table) tbody tr td div {
-            display: inline-block;
-        }
-
-        :deep(.el-table) tbody tr td {
-            text-align: center;
-        }
-
-        :deep(.el-table) tbody tr {
-            color: #ffffff !important;
-            background-color: rgba(0, 13, 32, 0.2);
-            border: none;
-        }
-
-        // 重写tablehover
-        :deep(.el-table) tbody tr:hover {
-            cursor: pointer;
-        }
-
-        //清除tablehover
-        :deep(.el-table) {
-            --el-table-border: 2px solid #292f6b;
-            --el-fill-color-light: none;
-            --el-border-color-lighter: none;
-            --el-fill-color-blank: none;
-        }
-
     }
+
+    :deep(.el-table) thead tr {
+        background-color: rgba(0, 13, 32, 0.2);
+        border: none;
+    }
+
+    //表头透明化
+    :deep(.el-table) thead th {
+        text-align: center;
+        background-color: rgba(0, 13, 32, 0.2);
+        border: none;
+    }
+
+    :deep(.el-table) thead th div {
+        color: #ffffff !important;
+    }
+
+    :deep(.el-table) tbody {
+        background-color: rgba(0, 13, 32, 0.2);
+    }
+
+    :deep(.el-table) tbody tr td div {
+        display: inline-block;
+    }
+
+    :deep(.el-table) tbody tr td {
+        text-align: center;
+    }
+
+    :deep(.el-table) tbody tr {
+        color: #ffffff !important;
+        background-color: rgba(0, 13, 32, 0.2);
+        border: none;
+    }
+
+    // 重写tablehover
+    :deep(.el-table) tbody tr:hover {
+        cursor: pointer;
+    }
+
+    //清除tablehover
+    :deep(.el-table) {
+        --el-table-border: 2px solid #292f6b;
+        --el-fill-color-light: none;
+        --el-border-color-lighter: none;
+        --el-fill-color-blank: none;
+    }
+
 }
 </style>

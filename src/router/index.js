@@ -33,6 +33,11 @@ const router = createRouter({
           component: () => import("@/views/Home.vue"),
         },
         {
+          path: "/videoMonitor",
+          name: "videoMonitor",
+          component: () => import("@/views/VideoMonitor/VideoMonitor.vue"),
+        },
+        {
           path: "/eventAnalysis",
           name: "eventAnalysis",
           component: () =>

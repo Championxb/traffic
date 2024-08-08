@@ -65,7 +65,7 @@ const handleSelect = (index) => {
             router.push('/home')
             break
         case '2':
-            router.push('/video')
+            router.push('/VideoMonitor')
             break
         case '3':
             router.push('/history')
